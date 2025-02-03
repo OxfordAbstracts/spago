@@ -289,6 +289,14 @@ You can ask Spago to come up with a good set of bounds for you by running:
 $ spago install --ensure-ranges
 ```
 
+You can specify your version ranges manually in the `spago.yaml` configuration file too:
+
+```yaml
+package:
+  dependencies:
+    - lists: ">=7.0.0 <8.0.0"
+```
+
 ### Install a direct dependency
 
 To add a dependency to your project you can run:
@@ -951,7 +959,7 @@ See the help message for more flags, and [the configuration format section](#the
 When bundling an `app`, the output will be a single executable file:
 
 ```console
-$ spago bundle --to index.js --bundle-type app --platform node
+$ spago bundle --outfile index.js --bundle-type app --platform node
 
 # It is then possible to run it with node:
 $ node index.js
@@ -1373,7 +1381,7 @@ workspace:
       # Value 1: "all" - All warnings are censored
       all
 
-      # Value 2: `NonEmptyArray (Either String { byPrefix :: String })`
+      # Value 2: `Array (Either String { byPrefix :: String })`
       # - String values:
       #      censor warnings if the code matches this code
       # - { byPrefix } values:
@@ -1384,6 +1392,16 @@ workspace:
       # see https://yaml-multiline.info/
       - byPrefix: >
         "Data.Map"'s `Semigroup instance`
+
+    # Specify whether to censor warnings coming from the compiler
+    # for files in workspace project source
+    # Optional - takes the same values as censorLibraryWarnings above
+    censorProjectWarnings: all
+
+    # Specify whether to censor warnings coming from the compiler
+    # for files in workspace project tests
+    # Optional - takes the same values as censorLibraryWarnings above
+    censorTestWarnings: all
 
     # Specify whether to show statistics at the end of the compilation,
     # and how verbose they should be.
